@@ -6,7 +6,7 @@
 #include <limits.h>
 
 #define MINIMUM_ARGUMENTS 3
-#define MAXIMUM_ARGUMENTS 
+#define MAXIMUM_ARGUMENTS 6
 
 /**
 * Expected run parameters:
@@ -55,16 +55,17 @@ int main(int argc, char** argv)
 			fprintf(stderr, "Failed to get cursor position. Defaulting to [0,0].");
 	}
 	
+	printf("Now clicking %d times per second, until %d clicks have been performed.", clicks_per_second, maximum_clicks);
 	// Successfully retrieved all input data. Now simulate the clicks.
 	unsigned int click_counter;
 	for(click_counter = 0; click_counter < maximum_clicks; click_counter++)
 	{
-		double delay = 1 / (clicks_per_second * 1000.0f);
+		double delay = 1000.0f / (clicks_per_second);
 		simulate_mouse_down(xpos, ypos, button);
 		Sleep(delay / 2.0f);
 		simulate_mouse_up(xpos, ypos, button);
 		Sleep(delay / 2.0f);
-		printf("Click!\n");
+		//printf("Click! Total delay this click was %g millis.\n", delay);
 	}
 	return 0;
 }
