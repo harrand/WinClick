@@ -7,7 +7,7 @@ set incdir=%cd%\inc
 set libdir=%cd%\lib
 echo Compiling WinClick
 cd src
-gcc *.c -o winclick.exe
+gcc *.c -static -o winclick.exe
 
 if not exist "%cpldir%" mkdir "%cpldir%"
 set lnkdir=%cpldir%\lnk

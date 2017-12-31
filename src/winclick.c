@@ -17,7 +17,7 @@ int main(int argc, char** argv)
 {
 	if(argc < MINIMUM_ARGUMENTS || argc > MAXIMUM_ARGUMENTS)
 	{
-		fprintf(stderr, "Error: Invalid number of arguments (%d). Expected between %d and %d", argc, MINIMUM_ARGUMENTS, MAXIMUM_ARGUMENTS);
+		fprintf(stderr, "Error: Invalid number of arguments (%d). Expected between %d and %d\n", argc, MINIMUM_ARGUMENTS, MAXIMUM_ARGUMENTS);
 		return -1;
 	}
 	const char* mouse_button_type = argv[1];
@@ -28,7 +28,7 @@ int main(int argc, char** argv)
 		button = RIGHT_BUTTON;
 	else
 	{
-		fprintf(stderr, "Invalid mouse button argument %s, should be \"left\" or \"right\"", mouse_button_type);
+		fprintf(stderr, "Invalid mouse button argument %s, should be \"left\" or \"right\"\n", mouse_button_type);
 	}
 	int clicks_per_second = atoi(argv[2]);
 	int maximum_clicks = INT_MAX;
@@ -52,20 +52,21 @@ int main(int argc, char** argv)
 			ypos = mouse_position.y;
 		}
 		else
-			fprintf(stderr, "Failed to get cursor position. Defaulting to [0,0].");
+			fprintf(stderr, "Failed to get cursor position. Defaulting to [0,0].\n");
 	}
 	
-	printf("Now clicking %d times per second, until %d clicks have been performed.", clicks_per_second, maximum_clicks);
+	printf("Now clicking %d times per second, until %d clicks have been performed.\n", clicks_per_second, maximum_clicks);
 	// Successfully retrieved all input data. Now simulate the clicks.
 	unsigned int click_counter;
-	for(click_counter = 0; click_counter < maximum_clicks; click_counter++)
+	for(click_counter = 0; click_counter <= maximum_clicks; click_counter++)
 	{
 		double delay = 1000.0f / (clicks_per_second);
 		simulate_mouse_down(xpos, ypos, button);
 		Sleep(delay / 2.0f);
 		simulate_mouse_up(xpos, ypos, button);
 		Sleep(delay / 2.0f);
-		//printf("Click! Total delay this click was %g millis.\n", delay);
+		printf("Number of clicks = %d\r", click_counter);
 	}
+	printf("\n");
 	return 0;
 }
